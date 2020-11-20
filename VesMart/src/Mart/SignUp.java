@@ -185,8 +185,6 @@ public class SignUp {
 			}
 		});
 		button1.setForeground(Color.BLACK);
-		/*Image img3=new ImageIcon(this.getClass().getResource("/submit.jpg")).getImage();
-		button1.setIcon(new ImageIcon(img3));*/
 		button1.setBackground(SystemColor.controlHighlight);
 		button1.setFont(new Font("Tahoma", Font.BOLD, 24));
 		button1.setBounds(759, 622, 137, 43);

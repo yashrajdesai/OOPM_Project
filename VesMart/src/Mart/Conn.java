@@ -13,7 +13,7 @@ public class Conn{
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con=DriverManager.getConnection("jdbc:mysql://project.cs52q5jxyll8.us-east-1.rds.amazonaws.com/project","root","YSMVESIT");
-			//st=con.createStatement();
+			st=con.createStatement();
 		} 
 		catch (Exception e) 
 		{
