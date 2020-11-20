@@ -16,7 +16,7 @@ import javax.swing.JPasswordField;
 
 public class loginves {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
 
@@ -46,14 +46,14 @@ public class loginves {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(70, 130, 180));
 		frame.setBounds(100, 100, 1325, 775);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel username = new JLabel("Username");
+		JLabel username = new JLabel("EMAIL ID");
 		username.setFont(new Font("Tahoma", Font.BOLD, 20));
 		username.setBounds(581, 221, 156, 40);
 		frame.getContentPane().add(username);
