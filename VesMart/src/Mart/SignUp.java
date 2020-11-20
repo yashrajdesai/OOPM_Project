@@ -9,6 +9,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -16,7 +18,17 @@ import javax.swing.border.Border;
 import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.SwingConstants;
+import java.awt.SystemColor;
+import java.awt.Window;
+import java.awt.event.ActionListener;
+import java.sql.Array;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Random;
+import java.awt.event.ActionEvent;
 
 public class SignUp {
 
@@ -130,13 +142,54 @@ public class SignUp {
 		frame.getContentPane().add(label7);
 		
 		
-		JButton button1 = new JButton("");
+		JButton button1 = new JButton("SUBMIT");
+		button1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				Random r=new Random();
+				int n=Math.abs((r.nextInt()%90000)+10000);
+				String s1=text1.getText();
+				String s2=text2.getText();
+				String s3=text3.getText();
+				String s4=textArea1.getText();
+				String s5=new String(text4.getPassword());
+				
+				if(s1.equals("") || s2.equals("") || s3.equals("") || s4.equals("") || s5.equals("") || s5.length()<8)
+				{
+					JOptionPane.showMessageDialog(null,"Please Enter All The Details");
+				}
+				else {
+				String query="insert into signup values(?,?,?,?,?,?)";
+				
+				Conn c1=new Conn();
+				try {
+					c1.ps=c1.con.prepareStatement(query);
+					c1.ps.setInt(1,n);
+					c1.ps.setString(2,s1);
+					c1.ps.setString(3,s2);
+					c1.ps.setString(4,s3);
+					c1.ps.setString(5,s4);
+					c1.ps.setString(6,s5);
+					
+					c1.ps.executeUpdate();
+					
+					JOptionPane.showMessageDialog(null,"Details Are Entered Successfully");
+					
+					new loginves().frame.setVisible(true);
+					frame.setVisible(false);
+				} catch (SQLException e1) {
+					System.out.println("ERROE IN UPDATING....");
+				}	
+			  }
+			}
+		});
 		button1.setForeground(Color.BLACK);
-		Image img3=new ImageIcon(this.getClass().getResource("/submit.jpg")).getImage();
-		button1.setIcon(new ImageIcon(img3));
-		button1.setBackground(Color.WHITE);
+		/*Image img3=new ImageIcon(this.getClass().getResource("/submit.jpg")).getImage();
+		button1.setIcon(new ImageIcon(img3));*/
+		button1.setBackground(SystemColor.controlHighlight);
 		button1.setFont(new Font("Tahoma", Font.BOLD, 24));
-		button1.setBounds(760, 611, 137, 85);
+		button1.setBounds(759, 622, 137, 43);
 		frame.getContentPane().add(button1);
 		
 		JLabel label8 = new JLabel("");
