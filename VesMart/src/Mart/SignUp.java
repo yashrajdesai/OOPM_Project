@@ -157,7 +157,7 @@ public class SignUp {
 				
 				if(s1.equals("") || s2.equals("") || s3.equals("") || s4.equals("") || s5.equals("") || s5.length()<8)
 				{
-					JOptionPane.showMessageDialog(null,"Please Enter All The Details");
+					JOptionPane.showMessageDialog(null,"Please Enter All The Details Correctly");
 				}
 				else {
 				String query="insert into signup values(?,?,?,?,?,?)";
