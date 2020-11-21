@@ -16,7 +16,7 @@ import javax.swing.JMenuItem;
 
 public class Home {
 
-	private JFrame frame;
+	public JFrame frame;
 
 	/**
 	 * Launch the application.
