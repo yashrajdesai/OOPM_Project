@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
 
 public class SignUp {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField text1;
 	private JTextField text2;
 	private JTextField text3;
@@ -64,7 +64,7 @@ public class SignUp {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setEnabled(false);
 		frame.getContentPane().setBackground(Color.WHITE);

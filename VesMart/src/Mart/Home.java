@@ -44,7 +44,7 @@ public class Home {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(100, 100, 1325, 775);
@@ -98,6 +98,8 @@ public class Home {
 			
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("I am clicked");
+				frame.setVisible(false);
+				new Electronics().setVisible(true);
 			}
 		});
 		Electronics.setFont(new Font("Tahoma", Font.BOLD, 26));
@@ -140,6 +142,7 @@ public class Home {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("I got clicked!");
+				
 			}
 		});
 		Grocery.setFont(new Font("Tahoma", Font.BOLD, 26));

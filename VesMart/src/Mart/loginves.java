@@ -6,17 +6,21 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
 public class loginves {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
 
@@ -46,7 +50,7 @@ public class loginves {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(70, 130, 180));
 		frame.setBounds(100, 100, 1325, 775);
@@ -82,6 +86,36 @@ public class loginves {
 		login.setBounds(607, 470, 164, 50);
 		frame.getContentPane().add(login);
 		
+		//Verifying password from Database
+
+		login.addActionListener(ae->{
+			String uname = textField.getText();
+			String pass=new String(passwordField.getPassword());
+			
+			System.out.println(uname);
+			System.out.println(pass);
+			
+			String query = "select Pass from signup where EmailId = '"+uname+"'";
+			Conn c2 = new Conn();
+			try {
+				ResultSet rs = c2.st.executeQuery(query);
+				rs.next();
+				String Pass = rs.getString("Pass");
+				System.out.println(Pass);
+				if(Pass.equals(pass)) {
+					JOptionPane.showMessageDialog(null,"Signed in Successfully");
+					new Home().frame.setVisible(true);
+					frame.setVisible(false);
+				}else {
+					JOptionPane.showMessageDialog(null,"Password/Username entered is incorrect");
+				}
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null,"Password/Username entered is incorrect");
+			}
+			
+		});
+			
+		
 		JButton signup = new JButton("Sign up");
 		Image img2=new ImageIcon(this.getClass().getResource("/Signup.png")).getImage();
 		signup.setIcon(new ImageIcon(img2));
@@ -89,6 +123,7 @@ public class loginves {
 		signup.setFont(new Font("Tahoma", Font.BOLD, 20));
 		signup.setBounds(822, 470, 164, 50);
 		frame.getContentPane().add(signup);
+
 		
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 20));

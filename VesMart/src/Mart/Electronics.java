@@ -21,7 +21,7 @@ import javax.swing.DefaultComboBoxModel;
 @SuppressWarnings("serial")
 public class Electronics extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
  
 	/**
 	 * Launch the application.
