@@ -30,13 +30,16 @@ import java.sql.SQLException;
 import java.util.Random;
 import java.awt.event.ActionEvent;
 
-public class SignUp {
+@SuppressWarnings("serial")
+public class SignUp{
 
 	public JFrame frame;
 	private JTextField text1;
 	private JTextField text2;
 	private JTextField text3;
 	private JPasswordField text4;
+	//public static String uname;
+	
 
 	/**
 	 * Launch the application.
@@ -145,6 +148,7 @@ public class SignUp {
 		JButton button1 = new JButton("SUBMIT");
 		button1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				
 				
 				Random r=new Random();

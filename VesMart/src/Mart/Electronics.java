@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Color;
@@ -15,14 +17,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 
 @SuppressWarnings("serial")
-public class Electronics extends JFrame {
+public class Electronics extends JFrame implements ActionListener{
 
 	public JPanel contentPane;
- 
+	public JLabel Laptop_name,Fridge_name,earphone_name,washingmachine_name,TV_name,smartphone_name;
+	public JComboBox laptop_quantity,Fridge_quantity,earphones_quantity,washing_machine_quantity,TV_quantity,smartphone_quantity;
+	public JButton Laptop_cart,Fridge_cart,earphones_cart,washing_machine_cart,TV_cart,smartphone_cart;
+	//public String uname;
+    //public int n1;
 	/**
 	 * Launch the application.
 	 */
@@ -86,7 +94,7 @@ public class Electronics extends JFrame {
 		Laptop_img.setBounds(55, 60, 319, 183);
 		contentPane.add(Laptop_img);
 		
-		JLabel Laptop_name = new JLabel("Lenovo Ideapad Slim 3i");
+		Laptop_name = new JLabel("Lenovo Ideapad Slim 3i");
 		Laptop_name.setFont(new Font("Tahoma", Font.BOLD, 18));
 		Laptop_name.setBounds(55, 252, 319, 36);
 		contentPane.add(Laptop_name);
@@ -97,24 +105,21 @@ public class Electronics extends JFrame {
 		Laptop_Price.setBounds(55, 285, 319, 36);
 		contentPane.add(Laptop_Price);
 		
-		JComboBox laptop_quantity = new JComboBox();
+	    laptop_quantity = new JComboBox();
 		laptop_quantity.setFont(new Font("Dialog", Font.BOLD, 14));
 		laptop_quantity.setEditable(true);
-		laptop_quantity.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		laptop_quantity.setModel(new DefaultComboBoxModel(new Integer[] {1,2,3,4,5}));
 		laptop_quantity.setSelectedItem("Select Quantity");
 		laptop_quantity.setBounds(55, 331, 160, 40);
 		contentPane.add(laptop_quantity);
 		
 		Image img8=new ImageIcon(this.getClass().getResource("/Cartsmall.png")).getImage();
 		
-		JButton Laptop_cart = new JButton("Add to Cart");
+		Laptop_cart = new JButton("Add to Cart");
 		Laptop_cart.setBackground(new Color(255, 140, 0));
 		Laptop_cart.setIcon(new ImageIcon(img8));
 		Laptop_cart.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Laptop_cart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		Laptop_cart.addActionListener(this);
 		Laptop_cart.setBounds(215, 331, 159, 40);
 		contentPane.add(Laptop_cart);
 		
@@ -124,7 +129,7 @@ public class Electronics extends JFrame {
 		Fridge_img.setBounds(577, 60, 140, 183);
 		contentPane.add(Fridge_img);
 		
-		JLabel Fridge_name = new JLabel("Samsung 215 L Refridgerator");
+		Fridge_name = new JLabel("Samsung 215 L Refridgerator");
 		Fridge_name.setFont(new Font("Tahoma", Font.BOLD, 18));
 		Fridge_name.setBounds(496, 252, 319, 36);
 		contentPane.add(Fridge_name);
@@ -134,22 +139,19 @@ public class Electronics extends JFrame {
 		Fridge_price.setBounds(496, 287, 319, 36);
 		contentPane.add(Fridge_price);
 		
-		JComboBox Fridge_quantity = new JComboBox();
+		Fridge_quantity = new JComboBox();
 		Fridge_quantity.setFont(new Font("Dialog", Font.BOLD, 14));
 		Fridge_quantity.setEditable(true);
-		Fridge_quantity.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		Fridge_quantity.setModel(new DefaultComboBoxModel(new Integer[] {1,2,3,4,5}));
 		Fridge_quantity.setSelectedItem("Select Quantity");
 		Fridge_quantity.setBounds(496, 331, 163, 40);
 		contentPane.add(Fridge_quantity);
 		
-		JButton Fridge_cart = new JButton("Add to Cart");
+		Fridge_cart = new JButton("Add to Cart");
 		Fridge_cart.setBackground(new Color(255, 140, 0));
 		Fridge_cart.setIcon(new ImageIcon(img8));
 		Fridge_cart.setFont(new Font("Tahoma", Font.BOLD, 14));
-		Fridge_cart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		Fridge_cart.addActionListener(this);
 		Fridge_cart.setBounds(656, 331, 159, 40);
 		contentPane.add(Fridge_cart);
 		
@@ -162,7 +164,7 @@ public class Electronics extends JFrame {
 		earphone_img.setBounds(943, 60, 319, 183);
 		contentPane.add(earphone_img);
 		
-		JLabel earphone_name = new JLabel("Boat Bassheads Wired Earphone");
+		earphone_name = new JLabel("Boat Bassheads Wired Earphone");
 		earphone_name.setFont(new Font("Tahoma", Font.BOLD, 18));
 		earphone_name.setBounds(943, 253, 319, 36);
 		contentPane.add(earphone_name);
@@ -172,19 +174,20 @@ public class Electronics extends JFrame {
 		earphone_price.setBounds(943, 287, 319, 36);
 		contentPane.add(earphone_price);
 		
-		JComboBox earphones_quantity = new JComboBox();
+		earphones_quantity = new JComboBox();
 		earphones_quantity.setFont(new Font("Dialog", Font.BOLD, 14));
 		earphones_quantity.setEditable(true);
-		earphones_quantity.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		earphones_quantity.setModel(new DefaultComboBoxModel(new Integer[] {1,2,3,4,5}));
 		earphones_quantity.setSelectedItem("Select Quantity");
 		earphones_quantity.setBounds(943, 331, 163, 40);
 		contentPane.add(earphones_quantity);
 		
-		JButton earphones_cart = new JButton("Add to Cart");
+		earphones_cart = new JButton("Add to Cart");
 		earphones_cart.setBackground(new Color(255, 140, 0));
 		earphones_cart.setIcon(new ImageIcon(img8));
 		earphones_cart.setFont(new Font("Tahoma", Font.BOLD, 14));
 		earphones_cart.setBounds(1103, 331, 159, 40);
+		earphones_cart.addActionListener(this);
 		contentPane.add(earphones_cart);
 		
 		JLabel Washing_maching_img = new JLabel("");
@@ -193,7 +196,7 @@ public class Electronics extends JFrame {
 		Washing_maching_img.setBounds(141, 414, 140, 183);
 		contentPane.add(Washing_maching_img);
 		
-		JLabel washingmachine_name = new JLabel("Godrej 5 star Washing machine");
+		washingmachine_name = new JLabel("Godrej 5 star Washing machine");
 		washingmachine_name.setFont(new Font("Tahoma", Font.BOLD, 18));
 		washingmachine_name.setBounds(55, 607, 319, 36);
 		contentPane.add(washingmachine_name);
@@ -203,19 +206,20 @@ public class Electronics extends JFrame {
 		washingmachine_price.setBounds(55, 647, 319, 36);
 		contentPane.add(washingmachine_price);
 		
-		JComboBox washing_machine_quantity = new JComboBox();
+		washing_machine_quantity = new JComboBox();
 		washing_machine_quantity.setFont(new Font("Dialog", Font.BOLD, 14));
 		washing_machine_quantity.setEditable(true);
-		washing_machine_quantity.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		washing_machine_quantity.setModel(new DefaultComboBoxModel(new Integer[] {1,2,3,4,5}));
 		washing_machine_quantity.setSelectedItem("Select Quantity");
 		washing_machine_quantity.setBounds(55, 693, 163, 40);
 		contentPane.add(washing_machine_quantity);
 		
-		JButton washing_machine_cart = new JButton("Add to Cart");
+		washing_machine_cart = new JButton("Add to Cart");
 		washing_machine_cart.setBackground(new Color(255, 140, 0));
 		washing_machine_cart.setIcon(new ImageIcon(img8));
 		washing_machine_cart.setFont(new Font("Tahoma", Font.BOLD, 14));
 		washing_machine_cart.setBounds(215, 693, 159, 40);
+		washing_machine_cart.addActionListener(this);
 		contentPane.add(washing_machine_cart);
 		
 		JLabel TV_img = new JLabel("");
@@ -224,7 +228,7 @@ public class Electronics extends JFrame {
 		TV_img.setBounds(496, 414, 319, 183);
 		contentPane.add(TV_img);
 		
-		JLabel TV_name = new JLabel("LG 32 inches HD LED Smart TV");
+		TV_name = new JLabel("LG 32 inches HD LED Smart TV");
 		TV_name.setFont(new Font("Tahoma", Font.BOLD, 18));
 		TV_name.setBounds(496, 607, 319, 36);
 		contentPane.add(TV_name);
@@ -234,19 +238,20 @@ public class Electronics extends JFrame {
 		TV_price.setBounds(496, 647, 319, 36);
 		contentPane.add(TV_price);
 		
-		JComboBox TV_quantity = new JComboBox();
+		TV_quantity = new JComboBox();
 		TV_quantity.setFont(new Font("Dialog", Font.BOLD, 14));
 		TV_quantity.setEditable(true);
-		TV_quantity.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		TV_quantity.setModel(new DefaultComboBoxModel(new Integer[] {1,2,3,4,5}));
 		TV_quantity.setSelectedItem("Select Quantity");
 		TV_quantity.setBounds(496, 693, 163, 40);
 		contentPane.add(TV_quantity);
 		
-		JButton TV_cart = new JButton("Add to Cart");
+		TV_cart = new JButton("Add to Cart");
 		TV_cart.setBackground(new Color(255, 140, 0));
 		TV_cart.setIcon(new ImageIcon(img8));
 		TV_cart.setFont(new Font("Tahoma", Font.BOLD, 14));
 		TV_cart.setBounds(656, 693, 159, 40);
+		TV_cart.addActionListener(this);
 		contentPane.add(TV_cart);
 		
 		JLabel smartphone_img = new JLabel("");
@@ -255,7 +260,7 @@ public class Electronics extends JFrame {
 		smartphone_img.setBounds(1030, 414, 159, 183);
 		contentPane.add(smartphone_img);
 		
-		JLabel smartphone_name = new JLabel("Samsung J7 Pro 64 GB");
+		smartphone_name = new JLabel("Samsung J7 Pro 64 GB");
 		smartphone_name.setFont(new Font("Tahoma", Font.BOLD, 18));
 		smartphone_name.setBounds(943, 607, 319, 36);
 		contentPane.add(smartphone_name);
@@ -265,19 +270,20 @@ public class Electronics extends JFrame {
 		smartphone_price.setBounds(943, 647, 319, 36);
 		contentPane.add(smartphone_price);
 		
-		JComboBox smarphone_quantity = new JComboBox();
-		smarphone_quantity.setFont(new Font("Dialog", Font.BOLD, 14));
-		smarphone_quantity.setEditable(true);
-		smarphone_quantity.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
-		smarphone_quantity.setSelectedItem("Select Quantity");
-		smarphone_quantity.setBounds(943, 693, 163, 40);
-		contentPane.add(smarphone_quantity);
+		smartphone_quantity = new JComboBox();
+		smartphone_quantity.setFont(new Font("Dialog", Font.BOLD, 14));
+		smartphone_quantity.setEditable(true);
+		smartphone_quantity.setModel(new DefaultComboBoxModel(new Integer[] {1,2,3,4,5}));
+		smartphone_quantity.setSelectedItem("Select Quantity");
+		smartphone_quantity.setBounds(943, 693, 163, 40);
+		contentPane.add(smartphone_quantity);
 		
-		JButton smartphone_cart = new JButton("Add to Cart");
+		smartphone_cart = new JButton("Add to Cart");
 		smartphone_cart.setBackground(new Color(255, 140, 0));
 		smartphone_cart.setIcon(new ImageIcon(img8));
 		smartphone_cart.setFont(new Font("Tahoma", Font.BOLD, 14));
 		smartphone_cart.setBounds(1103, 693, 159, 40);
+		smartphone_cart.addActionListener(this);
 		contentPane.add(smartphone_cart);
 		
 		JLabel background = new JLabel("New label");
@@ -285,5 +291,273 @@ public class Electronics extends JFrame {
 		background.setIcon(new ImageIcon(img10));
 		background.setBounds(0, 0, 1312, 748);
 		contentPane.add(background);		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent ae) {
+		// TODO Auto-generated method stub
+		String s1,query;
+		int n = 0;
+		int quantity,price = 0,quant = 0;
+		ResultSet rs,rn;
+		Conn c1=new Conn();
+		
+		//SignUp su=new SignUp();
+		//loginves l1=new loginves();
+		if(ae.getSource()==Laptop_cart)
+		{
+			s1=Laptop_name.getText();
+			quantity=(int) laptop_quantity.getSelectedItem();
+			query="select * from Items where Itemname='"+s1+"'";
+			try {
+				rs=c1.st.executeQuery(query);
+				if(rs.next())
+				{
+					price=Integer.parseInt(rs.getString("Price"))*quantity;
+					quant=rs.getInt("Quantity");
+				}
+				query="select * from signup where EmailId='"+loginves.uname+"'";
+				//System.out.println(loginves.uname);
+				rs=c1.st.executeQuery(query);
+				if(rs.next())
+				{
+					n=rs.getInt("UserId");
+					System.out.println(n);
+				}
+				if(quant-quantity<0)
+				{
+					JOptionPane.showMessageDialog(null,"Out Of Stock");
+				}
+				else
+				{
+					query="insert into Cart values(?,?,?,?)";
+					c1.ps=c1.con.prepareStatement(query);
+					c1.ps.setInt(1,n);
+					c1.ps.setString(2,s1);
+					c1.ps.setInt(3,quantity);
+					c1.ps.setString(4,String.valueOf(price));
+					c1.ps.executeUpdate();
+					
+					query="update Items set Quantity="+(quant-quantity)+" where Itemname='"+s1+"'";
+					c1.st.executeUpdate(query);
+					
+					JOptionPane.showMessageDialog(null,"Items Added Successfully");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(ae.getSource()==Fridge_cart)
+		{
+			s1=Fridge_name.getText();
+			quantity=(int) Fridge_quantity.getSelectedItem();
+			query="select * from Items where Itemname='"+s1+"'";
+			try {
+				rs=c1.st.executeQuery(query);
+				if(rs.next())
+				{
+					price=Integer.parseInt(rs.getString("Price"))*quantity;
+					quant=rs.getInt("Quantity");
+				}
+				query="select * from signup where EmailId='"+loginves.uname+"'";
+				rn=c1.st.executeQuery(query);
+				if(rn.next())
+				{
+				   n=rn.getInt("UserId");
+				}
+				if(quant-quantity<0)
+				{
+					JOptionPane.showMessageDialog(null,"Out Of Stock");
+				}
+				else
+				{
+					query="insert into Cart values(?,?,?,?)";
+					c1.ps=c1.con.prepareStatement(query);
+					c1.ps.setInt(1,n);
+					c1.ps.setString(2,s1);
+					c1.ps.setInt(3,quantity);
+					c1.ps.setString(4,String.valueOf(price));
+					c1.ps.executeUpdate();
+					
+					query="update Items set Quantity="+(quant-quantity)+" where Itemname='"+s1+"'";
+					c1.st.executeUpdate(query);
+					
+					JOptionPane.showMessageDialog(null,"Items Added Successfully");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			else if(ae.getSource()==earphones_cart)
+			{
+				s1=earphone_name.getText();
+				quantity=(int) earphones_quantity.getSelectedItem();
+				query="select * from Items where Itemname='"+s1+"'";
+				try {
+					rs=c1.st.executeQuery(query);
+					if(rs.next())
+					{
+						price=Integer.parseInt(rs.getString("Price"))*quantity;
+						quant=rs.getInt("Quantity");
+					}
+					query="select * from signup where EmailId='"+loginves.uname+"'";
+					rn=c1.st.executeQuery(query);
+					if(rn.next())
+					{
+						n=rn.getInt("UserId");
+					}
+					if(quant-quantity<0)
+					{
+						JOptionPane.showMessageDialog(null,"Out Of Stock");
+					}
+					else
+					{
+						query="insert into Cart values(?,?,?,?)";
+						c1.ps=c1.con.prepareStatement(query);
+						c1.ps.setInt(1,n);
+						c1.ps.setString(2,s1);
+						c1.ps.setInt(3,quantity);
+						c1.ps.setString(4,String.valueOf(price));
+						c1.ps.executeUpdate();
+						
+						query="update Items set Quantity="+(quant-quantity)+" where Itemname='"+s1+"'";
+						c1.st.executeUpdate(query);
+						
+						JOptionPane.showMessageDialog(null,"Items Added Successfully");
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		else if(ae.getSource()==washing_machine_cart)
+		{
+			s1=washingmachine_name.getText();
+			quantity=(int) washing_machine_quantity.getSelectedItem();
+			query="select * from Items where Itemname='"+s1+"'";
+			try {
+				rs=c1.st.executeQuery(query);
+				if(rs.next())
+				{
+					price=Integer.parseInt(rs.getString("Price"))*quantity;
+					quant=rs.getInt("Quantity");
+				}
+				query="select * from signup where EmailId='"+loginves.uname+"'";
+				//System.out.println(loginves.uname);
+				rn=c1.st.executeQuery(query);
+				if(rn.next())
+				{
+					n=rn.getInt("UserId");
+				}
+				if(quant-quantity<0)
+				{
+					JOptionPane.showMessageDialog(null,"Out Of Stock");
+				}
+				else
+				{
+					query="insert into Cart values(?,?,?,?)";
+					c1.ps=c1.con.prepareStatement(query);
+					c1.ps.setInt(1,n);
+					c1.ps.setString(2,s1);
+					c1.ps.setInt(3,quantity);
+					c1.ps.setString(4,String.valueOf(price));
+					c1.ps.executeUpdate();
+					
+					query="update Items set Quantity="+(quant-quantity)+" where Itemname='"+s1+"'";
+					c1.st.executeUpdate(query);
+					
+					JOptionPane.showMessageDialog(null,"Items Added Successfully");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(ae.getSource()==TV_cart)
+		{
+			s1=TV_name.getText();
+			quantity=(int) TV_quantity.getSelectedItem();
+			query="select * from Items where Itemname='"+s1+"'";
+			try {
+				rs=c1.st.executeQuery(query);
+				if(rs.next())
+				{
+					price=Integer.parseInt(rs.getString("Price"))*quantity;
+					quant=rs.getInt("Quantity");
+				}
+				query="select * from signup where EmailId='"+loginves.uname+"'";
+				rn=c1.st.executeQuery(query);
+				if(rn.next())
+				{
+					n=rn.getInt("UserId");
+				}
+				if(quant-quantity<0)
+				{
+					JOptionPane.showMessageDialog(null,"Out Of Stock");
+				}
+				else
+				{
+					query="insert into Cart values(?,?,?,?)";
+					c1.ps=c1.con.prepareStatement(query);
+					c1.ps.setInt(1,n);
+					c1.ps.setString(2,s1);
+					c1.ps.setInt(3,quantity);
+					c1.ps.setString(4,String.valueOf(price));
+					c1.ps.executeUpdate();
+					
+					query="update Items set Quantity="+(quant-quantity)+" where Itemname='"+s1+"'";
+					c1.st.executeUpdate(query);
+					
+					JOptionPane.showMessageDialog(null,"Items Added Successfully");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(ae.getSource()==smartphone_cart)
+		{
+			s1=smartphone_name.getText();
+			quantity=(int) smartphone_quantity.getSelectedItem();
+			query="select * from Items where Itemname='"+s1+"'";
+			try {
+				rs=c1.st.executeQuery(query);
+				if(rs.next())
+				{
+					price=Integer.parseInt(rs.getString("Price"))*quantity;
+					quant=rs.getInt("Quantity");
+				}
+				query="select * from signup where EmailId='"+loginves.uname+"'";
+				rn=c1.st.executeQuery(query);
+				if(rn.next())
+				{
+					n=rn.getInt("UserId");
+				}
+				if(quant-quantity<0)
+				{
+					JOptionPane.showMessageDialog(null,"Out Of Stock");
+				}
+				else
+				{
+					query="insert into Cart values(?,?,?,?)";
+					c1.ps=c1.con.prepareStatement(query);
+					c1.ps.setInt(1,n);
+					c1.ps.setString(2,s1);
+					c1.ps.setInt(3,quantity);
+					c1.ps.setString(4,String.valueOf(price));
+					c1.ps.executeUpdate();
+					
+					query="update Items set Quantity="+(quant-quantity)+" where Itemname='"+s1+"'";
+					c1.st.executeUpdate(query);
+					
+					JOptionPane.showMessageDialog(null,"Items Added Successfully");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

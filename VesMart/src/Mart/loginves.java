@@ -18,12 +18,13 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
-public class loginves {
+@SuppressWarnings("serial")
+public class loginves extends Electronics{
 
 	public JFrame frame;
-	private JTextField textField;
+	public JTextField textField;
 	private JPasswordField passwordField;
-
+    public static String uname;
 	/**
 	 * Launch the application.
 	 */
@@ -78,10 +79,6 @@ public class loginves {
 		Image img1=new ImageIcon(this.getClass().getResource("/Login.png")).getImage();
 		login.setIcon(new ImageIcon(img1));
 		login.setBackground(new Color(0, 139, 139));
-		login.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		login.setFont(new Font("Tahoma", Font.BOLD, 20));
 		login.setBounds(607, 470, 164, 50);
 		frame.getContentPane().add(login);
@@ -89,7 +86,7 @@ public class loginves {
 		//Verifying password from Database
 
 		login.addActionListener(ae->{
-			String uname = textField.getText();
+		    uname = textField.getText();
 			String pass=new String(passwordField.getPassword());
 			
 			System.out.println(uname);
@@ -117,11 +114,18 @@ public class loginves {
 			
 		
 		JButton signup = new JButton("Sign up");
+		signup.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new SignUp().frame.setVisible(true);
+				frame.setVisible(false);
+			}
+		});
 		Image img2=new ImageIcon(this.getClass().getResource("/Signup.png")).getImage();
 		signup.setIcon(new ImageIcon(img2));
 		signup.setBackground(new Color(0, 139, 139));
 		signup.setFont(new Font("Tahoma", Font.BOLD, 20));
 		signup.setBounds(822, 470, 164, 50);
+		
 		frame.getContentPane().add(signup);
 
 		
