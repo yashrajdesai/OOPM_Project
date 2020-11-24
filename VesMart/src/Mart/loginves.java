@@ -19,12 +19,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
-public class loginves extends Electronics{
+public class loginves {
 
 	public JFrame frame;
 	public JTextField textField;
 	private JPasswordField passwordField;
-    public static String uname;
+    public static int userId,OrderTotal=0;
 	/**
 	 * Launch the application.
 	 */
@@ -86,13 +86,15 @@ public class loginves extends Electronics{
 		//Verifying password from Database
 
 		login.addActionListener(ae->{
+			String uname;
 		    uname = textField.getText();
 			String pass=new String(passwordField.getPassword());
 			
-			System.out.println(uname);
-			System.out.println(pass);
+//			System.out.println(uname);
+//			System.out.println(pass);
 			
 			String query = "select Pass from signup where EmailId = '"+uname+"'";
+			String query1="select * from signup where EmailId='"+uname+"'";
 			Conn c2 = new Conn();
 			try {
 				ResultSet rs = c2.st.executeQuery(query);
@@ -103,6 +105,10 @@ public class loginves extends Electronics{
 					JOptionPane.showMessageDialog(null,"Signed in Successfully");
 					new Home().frame.setVisible(true);
 					frame.setVisible(false);
+					rs=c2.st.executeQuery(query1);
+					rs.next();
+					userId=rs.getInt("UserId");
+					System.out.println(userId);
 				}else {
 					JOptionPane.showMessageDialog(null,"Password/Username entered is incorrect");
 				}

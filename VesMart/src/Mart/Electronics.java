@@ -29,8 +29,7 @@ public class Electronics extends JFrame implements ActionListener{
 	public JLabel Laptop_name,Fridge_name,earphone_name,washingmachine_name,TV_name,smartphone_name;
 	public JComboBox laptop_quantity,Fridge_quantity,earphones_quantity,washing_machine_quantity,TV_quantity,smartphone_quantity;
 	public JButton Laptop_cart,Fridge_cart,earphones_cart,washing_machine_cart,TV_cart,smartphone_cart;
-	//public String uname;
-    //public int n1;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -51,6 +50,9 @@ public class Electronics extends JFrame implements ActionListener{
 	 * Create the frame.
 	 */
 	public Electronics() {
+		 
+		int userId = loginves.userId;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1325, 775);
 		contentPane = new JPanel();
@@ -67,8 +69,8 @@ public class Electronics extends JFrame implements ActionListener{
 		JButton back = new JButton("Back");
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Home().frame.setVisible(true);
-				setVisible(false);
+			new Home().frame.setVisible(true);	
+			setVisible(false);
 			}
 		});
 		back.setBackground(new Color(0, 128, 128));
@@ -80,6 +82,35 @@ public class Electronics extends JFrame implements ActionListener{
 		contentPane.add(back);
 		
 		JButton cart = new JButton("Cart");
+		cart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Conn c = new Conn();
+				String query1 = "select Price from Cart where UserId = "+userId;	
+				try {
+					ResultSet rs = c.st.executeQuery(query1);
+					int itemPrice;
+					while(rs.next()) {
+						itemPrice = rs.getInt("Price");
+						loginves.OrderTotal+=itemPrice;
+					}
+				} catch (SQLException e1) {
+
+					e1.printStackTrace();
+				}
+				
+				
+				
+				if(loginves.OrderTotal==0) {
+					JOptionPane.showMessageDialog(null,"Cart is empty ! Please add items to cart. ");
+					new Home().frame.setVisible(true);	
+				}else {
+					new Cart().setVisible(true);
+				}
+				setVisible(false);				
+				}
+
+		});
 		cart.setBackground(new Color(0, 128, 128));
 		Image img7=new ImageIcon(this.getClass().getResource("/Cart.png")).getImage();
 		cart.setIcon(new ImageIcon(img7));
@@ -297,13 +328,11 @@ public class Electronics extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
 		// TODO Auto-generated method stub
 		String s1,query;
-		int n = 0;
 		int quantity,price = 0,quant = 0;
-		ResultSet rs,rn;
+		ResultSet rs;
 		Conn c1=new Conn();
+		int userId = loginves.userId;
 		
-		//SignUp su=new SignUp();
-		//loginves l1=new loginves();
 		if(ae.getSource()==Laptop_cart)
 		{
 			s1=Laptop_name.getText();
@@ -316,14 +345,8 @@ public class Electronics extends JFrame implements ActionListener{
 					price=Integer.parseInt(rs.getString("Price"))*quantity;
 					quant=rs.getInt("Quantity");
 				}
-				query="select * from signup where EmailId='"+loginves.uname+"'";
-				//System.out.println(loginves.uname);
-				rs=c1.st.executeQuery(query);
-				if(rs.next())
-				{
-					n=rs.getInt("UserId");
-					System.out.println(n);
-				}
+				
+			
 				if(quant-quantity<0)
 				{
 					JOptionPane.showMessageDialog(null,"Out Of Stock");
@@ -332,7 +355,7 @@ public class Electronics extends JFrame implements ActionListener{
 				{
 					query="insert into Cart values(?,?,?,?)";
 					c1.ps=c1.con.prepareStatement(query);
-					c1.ps.setInt(1,n);
+					c1.ps.setInt(1,userId);
 					c1.ps.setString(2,s1);
 					c1.ps.setInt(3,quantity);
 					c1.ps.setString(4,String.valueOf(price));
@@ -360,21 +383,17 @@ public class Electronics extends JFrame implements ActionListener{
 					price=Integer.parseInt(rs.getString("Price"))*quantity;
 					quant=rs.getInt("Quantity");
 				}
-				query="select * from signup where EmailId='"+loginves.uname+"'";
-				rn=c1.st.executeQuery(query);
-				if(rn.next())
-				{
-				   n=rn.getInt("UserId");
-				}
+				
 				if(quant-quantity<0)
 				{
 					JOptionPane.showMessageDialog(null,"Out Of Stock");
 				}
 				else
 				{
+				
 					query="insert into Cart values(?,?,?,?)";
 					c1.ps=c1.con.prepareStatement(query);
-					c1.ps.setInt(1,n);
+					c1.ps.setInt(1,userId);
 					c1.ps.setString(2,s1);
 					c1.ps.setInt(3,quantity);
 					c1.ps.setString(4,String.valueOf(price));
@@ -402,21 +421,17 @@ public class Electronics extends JFrame implements ActionListener{
 						price=Integer.parseInt(rs.getString("Price"))*quantity;
 						quant=rs.getInt("Quantity");
 					}
-					query="select * from signup where EmailId='"+loginves.uname+"'";
-					rn=c1.st.executeQuery(query);
-					if(rn.next())
-					{
-						n=rn.getInt("UserId");
-					}
+					
 					if(quant-quantity<0)
 					{
 						JOptionPane.showMessageDialog(null,"Out Of Stock");
 					}
 					else
 					{
+						
 						query="insert into Cart values(?,?,?,?)";
 						c1.ps=c1.con.prepareStatement(query);
-						c1.ps.setInt(1,n);
+						c1.ps.setInt(1,userId);
 						c1.ps.setString(2,s1);
 						c1.ps.setInt(3,quantity);
 						c1.ps.setString(4,String.valueOf(price));
@@ -444,22 +459,17 @@ public class Electronics extends JFrame implements ActionListener{
 					price=Integer.parseInt(rs.getString("Price"))*quantity;
 					quant=rs.getInt("Quantity");
 				}
-				query="select * from signup where EmailId='"+loginves.uname+"'";
-				//System.out.println(loginves.uname);
-				rn=c1.st.executeQuery(query);
-				if(rn.next())
-				{
-					n=rn.getInt("UserId");
-				}
+				
 				if(quant-quantity<0)
 				{
 					JOptionPane.showMessageDialog(null,"Out Of Stock");
 				}
 				else
 				{
+			
 					query="insert into Cart values(?,?,?,?)";
 					c1.ps=c1.con.prepareStatement(query);
-					c1.ps.setInt(1,n);
+					c1.ps.setInt(1,userId);
 					c1.ps.setString(2,s1);
 					c1.ps.setInt(3,quantity);
 					c1.ps.setString(4,String.valueOf(price));
@@ -487,21 +497,17 @@ public class Electronics extends JFrame implements ActionListener{
 					price=Integer.parseInt(rs.getString("Price"))*quantity;
 					quant=rs.getInt("Quantity");
 				}
-				query="select * from signup where EmailId='"+loginves.uname+"'";
-				rn=c1.st.executeQuery(query);
-				if(rn.next())
-				{
-					n=rn.getInt("UserId");
-				}
+				
 				if(quant-quantity<0)
 				{
 					JOptionPane.showMessageDialog(null,"Out Of Stock");
 				}
 				else
 				{
+					
 					query="insert into Cart values(?,?,?,?)";
 					c1.ps=c1.con.prepareStatement(query);
-					c1.ps.setInt(1,n);
+					c1.ps.setInt(1,userId);
 					c1.ps.setString(2,s1);
 					c1.ps.setInt(3,quantity);
 					c1.ps.setString(4,String.valueOf(price));
@@ -529,21 +535,17 @@ public class Electronics extends JFrame implements ActionListener{
 					price=Integer.parseInt(rs.getString("Price"))*quantity;
 					quant=rs.getInt("Quantity");
 				}
-				query="select * from signup where EmailId='"+loginves.uname+"'";
-				rn=c1.st.executeQuery(query);
-				if(rn.next())
-				{
-					n=rn.getInt("UserId");
-				}
+				
 				if(quant-quantity<0)
 				{
 					JOptionPane.showMessageDialog(null,"Out Of Stock");
 				}
 				else
 				{
+					
 					query="insert into Cart values(?,?,?,?)";
 					c1.ps=c1.con.prepareStatement(query);
-					c1.ps.setInt(1,n);
+					c1.ps.setInt(1,userId);
 					c1.ps.setString(2,s1);
 					c1.ps.setInt(3,quantity);
 					c1.ps.setString(4,String.valueOf(price));
