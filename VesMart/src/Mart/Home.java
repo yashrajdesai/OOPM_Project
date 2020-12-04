@@ -155,6 +155,8 @@ public class Home {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("I got clicked!");
+				frame.setVisible(false);
+				new Books().setVisible(true);
 			}
 		});
 		Books.setFont(new Font("Tahoma", Font.BOLD, 26));
